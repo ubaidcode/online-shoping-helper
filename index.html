@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ShopHub — Choose Your Shopping Website</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #172033;
+            --muted: #697386;
+            --primary: #5b5cf0;
+            --primary-dark: #4546d8;
+            --border: #e6e9f0;
+            --shadow: 0 12px 35px rgba(31, 38, 70, 0.08);
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(91,92,240,.10), transparent 28%),
+                radial-gradient(circle at 90% 15%, rgba(0,190,255,.09), transparent 25%),
+                var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            padding: 24px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(230,233,240,.8);
+            background: rgba(255,255,255,.82);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            background: linear-gradient(135deg, #5b5cf0, #7c4dff);
+            color: white;
+            display: grid;
+            place-items: center;
+            font-size: 22px;
+            box-shadow: 0 8px 20px rgba(91,92,240,.25);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .header-badge {
+            background: #eef0ff;
+            color: var(--primary);
+            padding: 9px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* HERO */
+        .hero {
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 70px 20px 35px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: 0 5px 20px rgba(0,0,0,.04);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 68px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #5b5cf0, #9a4dff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* SEARCH */
+        .search-area {
+            max-width: 760px;
+            margin: 30px auto 20px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            height: 62px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 0 22px 0 58px;
+            outline: none;
+            font-size: 16px;
+            color: var(--text);
+            transition: .25s;
+        }
+
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 12px 35px rgba(91,92,240,.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 21px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 21px;
+        }
+
+        /* CATEGORIES */
+        .categories {
+            max-width: 1150px;
+            margin: 10px auto 35px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .category-btn {
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--muted);
+            border-radius: 25px;
+            padding: 9px 16px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1250px;
+            margin: auto;
+            padding: 0 20px 70px;
+        }
+
+        .section-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-top h2 {
+            font-size: 24px;
+        }
+
+        .result-count {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        /* GRID */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 17px;
+        }
+
+        /* CARD */
+        .shop-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 21px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s, border-color .25s;
+            box-shadow: 0 5px 18px rgba(30,35,60,.035);
+        }
+
+        .shop-card::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(91,92,240,.06);
+            right: -45px;
+            bottom: -45px;
+        }
+
+        .shop-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 38px rgba(30,35,60,.12);
+            border-color: rgba(91,92,240,.35);
+        }
+
+        .shop-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, #eef0ff, #f6f3ff);
+            display: grid;
+            place-items: center;
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 17px;
+            border: 1px solid #e5e5ff;
+        }
+
+        .shop-name {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        .shop-category {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .visit {
+            margin-top: 17px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* EMPTY */
+        .empty {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #111528;
+            color: #aeb4c7;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        footer p {
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1000px) {
+            .shop-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding: 18px 5%;
+            }
+
+            .header-badge {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 50px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .shop-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .shop-card {
+                padding: 17px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .shop-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .section-top {
+                align-items: flex-start;
+                gap: 10px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <div class="logo-icon">🛍</div>
+        Shop<span>Hub</span>
+    </div>
+
+    <div class="header-badge">
+        60+ Shopping Platforms
+    </div>
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-badge">
+        ✨ Your Gateway to Online Shopping
+    </div>
+
+    <h1>
+        Choose Your <span>Shopping</span> Website
+    </h1>
+
+    <p>
+        Apni pasand ki shopping website choose karein.
+        Kisi bhi platform par click karein aur directly uski official website par chale jayen.
+    </p>
+
+    <div class="search-area">
+        <span class="search-icon">🔎</span>
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search shopping website..."
+            autocomplete="off"
+        >
+    </div>
+
+</section>
+
+
+<div class="categories">
+
+    <button class="category-btn active" data-category="All">
+        All
+    </button>
+
+    <button class="category-btn" data-category="General">
+        General
+    </button>
+
+    <button class="category-btn" data-category="Fashion">
+        Fashion
+    </button>
+
+    <button class="category-btn" data-category="Electronics">
+        Electronics
+    </button>
+
+    <button class="category-btn" data-category="Beauty">
+        Beauty
+    </button>
+
+    <button class="category-btn" data-category="Marketplace">
+        Marketplace
+    </button>
+
+    <button class="category-btn" data-category="Home">
+        Home
+    </button>
+
+    <button class="category-btn" data-category="Grocery">
+        Grocery
+    </button>
+
+</div>
+
+
+<main>
+
+    <div class="section-top">
+        <h2>Popular Shopping Platforms</h2>
+        <div class="result-count" id="resultCount"></div>
+    </div>
+
+    <div class="shop-grid" id="shopGrid"></div>
+
+    <div class="empty" id="emptyState">
+        <div class="empty-icon">🔍</div>
+        <h3>No website found</h3>
+        <p>Try searching with another name.</p>
+    </div>
+
+</main>
+
+
+<footer>
+    <strong>ShopHub</strong>
+    <p>Your simple gateway to popular online shopping platforms.</p>
+</footer>
+
+
+<script>
+
+const websites = [
+
+    {
+        name: "Amazon",
+        category: "General",
+        icon: "AM",
+        url: "https://www.amazon.com/"
+    },
+
+    {
+        name: "eBay",
+        category: "Marketplace",
+        icon: "EB",
+        url: "https://www.ebay.com/"
+    },
+
+    {
+        name: "Walmart",
+        category: "General",
+        icon: "WM",
+        url: "https://www.walmart.com/"
+    },
+
+    {
+        name: "Target",
+        category: "General",
+        icon: "TG",
+        url: "https://www.target.com/"
+    },
+
+    {
+        name: "Etsy",
+        category: "Marketplace",
+        icon: "ET",
+        url: "https://www.etsy.com/"
+    },
+
+    {
+        name: "AliExpress",
+        category: "Marketplace",
+        icon: "AE",
+        url: "https://www.aliexpress.com/"
+    },
+
+    {
+        name: "Alibaba",
+        category: "Marketplace",
+        icon: "AL",
+        url: "https://www.alibaba.com/"
+    },
+
+    {
+        name: "Temu",
+        category: "Marketplace",
+        icon: "TM",
+        url: "https://www.temu.com/"
+    },
+
+    {
+        name: "Best Buy",
+        category: "Electronics",
+        icon: "BB",
+        url: "https://www.bestbuy.com/"
+    },
+
+    {
+        name: "Newegg",
+        category: "Electronics",
+        icon: "NG",
+        url: "https://www.newegg.com/"
+    },
+
+    {
+        name: "B&H Photo",
+        category: "Electronics",
+        icon: "BH",
+        url: "https://www.bhphotovideo.com/"
+    },
+
+    {
+        name: "Wayfair",
+        category: "Home",
+        icon: "WF",
+        url: "https://www.wayfair.com/"
+    },
+
+    {
+        name: "IKEA",
+        category: "Home",
+        icon: "IK",
+        url: "https://www.ikea.com/"
+    },
+
+    {
+        name: "Home Depot",
+        category: "Home",
+        icon: "HD",
+        url: "https://www.homedepot.com/"
+    },
+
+    {
+        name: "Lowe's",
+        category: "Home",
+        icon: "LS",
+        url: "https://www.lowes.com/"
+    },
+
+    {
+        name: "Macy's",
+        category: "Fashion",
+        icon: "MC",
+        url: "https://www.macys.com/"
+    },
+
+    {
+        name: "Nordstrom",
+        category: "Fashion",
+        icon: "NS",
+        url: "https://www.nordstrom.com/"
+    },
+
+    {
+        name: "Kohl's",
+        category: "Fashion",
+        icon: "KH",
+        url: "https://www.kohls.com/"
+    },
+
+    {
+        name: "Nike",
+        category: "Fashion",
+        icon: "NK",
+        url: "https://www.nike.com/"
+    },
+
+    {
+        name: "Adidas",
+        category: "Fashion",
+        icon: "AD",
+        url: "https://www.adidas.com/"
+    },
+
+    {
+        name: "Puma",
+        category: "Fashion",
+        icon: "PM",
+        url: "https://us.puma.com/"
+    },
+
+    {
+        name: "Zara",
+        category: "Fashion",
+        icon: "ZR",
+        url: "https://www.zara.com/"
+    },
+
+    {
+        name: "H&M",
+        category: "Fashion",
+        icon: "HM",
+        url: "https://www2.hm.com/"
+    },
+
+    {
+        name: "ASOS",
+        category: "Fashion",
+        icon: "AS",
+        url: "https://www.asos.com/"
+    },
+
+    {
+        name: "Uniqlo",
+        category: "Fashion",
+        icon: "UN",
+        url: "https://www.uniqlo.com/"
+    },
+
+    {
+        name: "Shein",
+        category: "Fashion",
+        icon: "SH",
+        url: "https://www.shein.com/"
+    },
+
+    {
+        name: "Levi's",
+        category: "Fashion",
+        icon: "LV",
+        url: "https://www.levi.com/"
+    },
+
+    {
+        name: "Gap",
+        category: "Fashion",
+        icon: "GP",
+        url: "https://www.gap.com/"
+    },
+
+    {
+        name: "Old Navy",
+        category: "Fashion",
+        icon: "ON",
+        url: "https://oldnavy.gap.com/"
+    },
+
+    {
+        name: "Under Armour",
+        category: "Fashion",
+        icon: "UA",
+        url: "https://www.underarmour.com/"
+    },
+
+    {
+        name: "Foot Locker",
+        category: "Fashion",
+        icon: "FL",
+        url: "https://www.footlocker.com/"
+    },
+
+    {
+        name: "Farfetch",
+        category: "Fashion",
+        icon: "FF",
+        url: "https://www.farfetch.com/"
+    },
+
+    {
+        name: "SSENSE",
+        category: "Fashion",
+        icon: "SS",
+        url: "https://www.ssense.com/"
+    },
+
+    {
+        name: "Lululemon",
+        category: "Fashion",
+        icon: "LL",
+        url: "https://shop.lululemon.com/"
+    },
+
+    {
+        name: "Reebok",
+        category: "Fashion",
+        icon: "RB",
+        url: "https://www.reebok.com/"
+    },
+
+    {
+        name: "New Balance",
+        category: "Fashion",
+        icon: "NB",
+        url: "https://www.newbalance.com/"
+    },
+
+    {
+        name: "Sephora",
+        category: "Beauty",
+        icon: "SE",
+        url: "https://www.sephora.com/"
+    },
+
+    {
+        name: "Ulta Beauty",
+        category: "Beauty",
+        icon: "UB",
+        url: "https://www.ulta.com/"
+    },
+
+    {
+        name: "MAC Cosmetics",
+        category: "Beauty",
+        icon: "MAC",
+        url: "https://www.maccosmetics.com/"
+    },
+
+    {
+        name: "The Body Shop",
+        category: "Beauty",
+        icon: "BS",
+        url: "https://www.thebodyshop.com/"
+    },
+
+    {
+        name: "Neutrogena",
+        category: "Beauty",
+        icon: "NT",
+        url: "https://www.neutrogena.com/"
+    },
+
+    {
+        name: "ASDA",
+        category: "Grocery",
+        icon: "AS",
+        url: "https://www.asda.com/"
+    },
+
+    {
+        name: "Tesco",
+        category: "Grocery",
+        icon: "TS",
+        url: "https://www.tesco.com/"
+    },
+
+    {
+        name: "Carrefour",
+        category: "Grocery",
+        icon: "CF",
+        url: "https://www.carrefour.com/"
+    },
+
+    {
+        name: "Kroger",
+        category: "Grocery",
+        icon: "KR",
+        url: "https://www.kroger.com/"
+    },
+
+    {
+        name: "Instacart",
+        category: "Grocery",
+        icon: "IC",
+        url: "https://www.instacart.com/"
+    },
+
+    {
+        name: "Chewy",
+        category: "General",
+        icon: "CW",
+        url: "https://www.chewy.com/"
+    },
+
+    {
+        name: "Wayfair",
+        category: "Home",
+        icon: "WY",
+        url: "https://www.wayfair.com/"
+    },
+
+    {
+        name: "Overstock",
+        category: "Home",
+        icon: "OS",
+        url: "https://www.overstock.com/"
+    },
+
+    {
+        name: "QVC",
+        category: "General",
+        icon: "QV",
+        url: "https://www.qvc.com/"
+    },
+
+    {
+        name: "Neiman Marcus",
+        category: "Fashion",
+        icon: "NM",
+        url: "https://www.neimanmarcus.com/"
+    },
+
+    {
+        name: "Bloomingdale's",
+        category: "Fashion",
+        icon: "BL",
+        url: "https://www.bloomingdales.com/"
+    },
+
+    {
+        name: "JCPenney",
+        category: "Fashion",
+        icon: "JC",
+        url: "https://www.jcpenney.com/"
+    },
+
+    {
+        name: "Dillard's",
+        category: "Fashion",
+        icon: "DI",
+        url: "https://www.dillards.com/"
+    },
+
+    {
+        name: "Belk",
+        category: "Fashion",
+        icon: "BK",
+        url: "https://www.belk.com/"
+    },
+
+    {
+        name: "Dick's Sporting Goods",
+        category: "General",
+        icon: "DS",
+        url: "https://www.dickssportinggoods.com/"
+    },
+
+    {
+        name: "Academy Sports",
+        category: "General",
+        icon: "AC",
+        url: "https://www.academy.com/"
+    },
+
+    {
+        name: "GameStop",
+        category: "Electronics",
+        icon: "GS",
+        url: "https://www.gamestop.com/"
+    },
+
+    {
+        name: "Boohoo",
+        category: "Fashion",
+        icon: "BH",
+        url: "https://www.boohoo.com/"
+    },
+
+    {
+        name: "PrettyLittleThing",
+        category: "Fashion",
+        icon: "PL",
+        url: "https://www.prettylittlething.com/"
+    },
+
+    {
+        name: "Mercari",
+        category: "Marketplace",
+        icon: "ME",
+        url: "https://www.mercari.com/"
+    },
+
+    {
+        name: "Poshmark",
+        category: "Marketplace",
+        icon: "PO",
+        url: "https://poshmark.com/"
+    },
+
+    {
+        name: "Rakuten",
+        category: "Marketplace",
+        icon: "RA",
+        url: "https://www.rakuten.com/"
+    },
+
+    {
+        name: "Saks Fifth Avenue",
+        category: "Fashion",
+        icon: "SF",
+        url: "https://www.saksfifthavenue.com/"
+    }
+
+];
+
+
+const grid = document.getElementById("shopGrid");
+const searchInput = document.getElementById("searchInput");
+const resultCount = document.getElementById("resultCount");
+const emptyState = document.getElementById("emptyState");
+
+let selectedCategory = "All";
+
+
+function renderWebsites() {
+
+    const searchTerm = searchInput.value.toLowerCase().trim();
+
+    const filtered = websites.filter(site => {
+
+        const matchesSearch =
+            site.name.toLowerCase().includes(searchTerm) ||
+            site.category.toLowerCase().includes(searchTerm);
+
+        const matchesCategory =
+            selectedCategory === "All" ||
+            site.category === selectedCategory;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+
+    grid.innerHTML = "";
+
+    resultCount.textContent =
+        `${filtered.length} platform${filtered.length !== 1 ? "s" : ""}`;
+
+
+    if (filtered.length === 0) {
+        emptyState.style.display = "block";
+        return;
+    }
+
+    emptyState.style.display = "none";
+
+
+    filtered.forEach(site => {
+
+        const card = document.createElement("div");
+
+        card.className = "shop-card";
+
+        card.innerHTML = `
+            <div class="shop-icon">${site.icon}</div>
+
+            <div class="shop-name">
+                ${site.name}
+            </div>
+
+            <div class="shop-category">
+                ${site.category}
+            </div>
+
+            <div class="visit">
+                Visit Website →
+            </div>
+        `;
+
+
+        card.addEventListener("click", () => {
+
+            window.open(
+                site.url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        });
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+searchInput.addEventListener("input", renderWebsites);
+
+
+document.querySelectorAll(".category-btn").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        document
+            .querySelectorAll(".category-btn")
+            .forEach(btn => btn.classList.remove("active"));
+
+        button.classList.add("active");
+
+        selectedCategory = button.dataset.category;
+
+        renderWebsites();
+
+    });
+
+});
+
+
+renderWebsites();
+
+</script>
+
+</body>
+</html>
